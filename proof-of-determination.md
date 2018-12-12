@@ -35,8 +35,9 @@ uint256 _blockReward;       // BR
 uint256 _bondPeriod;        // T
 
 uint256 _intValidators;
-mapping _ValidatorElectHash(uint256 => uint256);
-mapping _ValidatorElect(uint256 => uint256);
+mapping _validatorElectHash(uint256 => uint256);  // mapping of validator-elect PoD
+mapping _validatorElect(uint256 => uint256);      // mapping of validator-elect PoS keys
+mapping _validatorOrder(uint256 => uint256);      // mapping of ordered validators
 ```
 
 
@@ -58,16 +59,18 @@ return true;
 function publishSigs() public returns(bool){
 
 require(block >= electionBlockEnd);
-require(intValidators >= minValidators);
+require(intValidators >= startValidators);
 
 for (uint i=0, i < intValidators, i++{
-_bridgeValidator[i] = _validatorElect[i];
-_posValidator[i] = _validatorElectPoSKey[i];
+_validatorOrder[i] = _getOrder(i);
 }
 
 return true;
 }
 ```
+
+>**todo**
+>Specify the `_getOrder(i)` function to order validator-elects in accodance of their PoD
 
 In the election period any validator-elect can choose to increase their odds of being in the starting validator set by cycling through nonces off-chain and attempting to find the lowest possible hash they can. Once the starting signatures are published the first validator in the mapping can propose the genesis block on the PoS network, which includes the address of the election contract. The other validators in the PoS network will accept this genesis block by cross-referring to the election contract. They will reject any genesis block that is not valid. 
 
@@ -114,7 +117,7 @@ function emitTokens(uint256 _amount, address _destAddr) onlyValidator {
 If the validator attempts to emit tokens improperly or with the incorrect details, then other validators can block the transaction and even slash the validator. This should be codified prior to the network launch. 
 
 
-Since the liquidity pool bonds PoS tokens to ether using the `X*Y=K` model, it allows anyone to purchase emitted tokens from the pool at any price they deem is worthwhile. Placing ether in the pool causes the token price to increase as they are emitted in accordance with the `X*Y=K` model. Since the block reward is continually placed in the pool, the price will continually reset back down to fair market prices. 
+Since the liquidity pool bonds PoS tokens to Ether using the `X*Y=K` model, [(implementation)](https://github.com/thorchain/Resources/blob/master/Whitepapers/ASGARDEX/clp-implementation.md), it allows anyone to purchase emitted tokens from the pool at any price they deem is worthwhile. Placing ether in the pool causes the token price to increase as they are emitted in accordance with the `X*Y=K` model. Since the block reward is continually placed in the pool, the price will continually reset back down to fair market prices. 
 
 If the network chooses to remove the bridge after the network is bootstrapped (`m` validators) then the liquidity block reward should be removed by the validators, and the residual balance in the contract should be destroyed. On the ethereum side, the ether will be locked forever, since it is no longer necessary. 
 
