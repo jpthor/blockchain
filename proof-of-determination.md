@@ -2,7 +2,7 @@
 
 ## An egalitarian method to launch Proof of Stake networks. 
 
->We propose a novel method to a launch and scale the validator set in Proof of Stake networks, as well as offering a fair, liquid and accessible manner to distribute tokens by using a censorship resistant smart contract blockchain to seed the network. A PoS network is prepared by first deploying an election contract as well as a bridging contract that links the two chains together. The PoS network is hard-coded with a starting validator count `n`, the beginning block reward `BR`, a bond period `T`, and a cycle time to add additional validator slots, `c` and the maximum number of validators, `m`. Validator-elects then run the PoS network software, as well depositing a “Proof of Determination” (PoD) into the election contract. The PoD contains their PoS public key, a nonce, and the hash of their keys and nonce. Since the election contract is permissionless, any validator-elect can attempt to add themselves. The validator-elects attempt to find the lowest possible hash they can by incrementing the nonces.  
+>We propose a novel method to a launch and scale the validator set in Proof of Stake networks, as well as offering a fair, liquid and accessible manner to distribute tokens by using a censorship resistant smart contract blockchain to seed the network. A PoS network is prepared by first deploying an election contract as well as a bridging contract that links the two chains together. The PoS network is hard-coded with a starting validator count `n`, the beginning block reward `BR`, a bond period `T`, a cycle time to add additional validator slots `c`, and the maximum number of validators `m`. Validator-elects then run the PoS network software, as well depositing a “Proof of Determination” (PoD) into the election contract. The PoD contains their PoS public key, a nonce, and the hash of their keys and nonce. Since the election contract is permissionless, any validator-elect can attempt to add themselves. The validator-elects attempt to find the lowest possible hash they can by incrementing the nonces.  
 
 >Once the validator-elects observe the `n` number of unique public keys in the election contract, they can attempt to propose the genesis block on the PoS network. The round-robin validator order is deterministically set by the value of the PoDs in the election contract, ordered in ascending order. The genesis block reward is distributed, `BR/m` units of tokens emitted to `n` validator-elects, incrementally locked beginning at `T`, and ending at `2T`, in increments of `c` blocks. This ensures a smooth and continuous lock/unlock cycle for validators. Every period of `c`, a new validator slot is opened up, such that after a certain number of `T`, the intended capped number of validators `m` is achieved (such as 100). New validators continue to elect themselves into the election contract, with the lowest-value PoDs signed into the Validator Set.
 
@@ -26,7 +26,7 @@ The owner of the Election Contract must hard-code the address of the Bridge Cont
 
 **Variables**
 
-```
+```solidity
 address _addressBridge;
 uint256 _startValidators;   // n
 uint256 _finishValidators;  // m
@@ -42,7 +42,7 @@ mapping _validatorOrder(uint256 => uint256);      // mapping of ordered validato
 
 
 1) **Election Method.** Anyone can call the public election method to nominate themselves. They must insert their PoS key, a nonce and the hash of their key and nonce.
-```
+```solidity
 function electMe(uint256 _posKey, uint256 _nonce, uint256 _hash) public returns(bool){
 
 require(sha256(_posKey + _nonce) == _hash);
@@ -55,7 +55,7 @@ return true;
 
 2) **Update Signatures.** Anyone can call the public update signature method to publish the lowest hashes in the election contract. The election period must be expired and the minimum number of public keys must be present. 
 
-```
+```solidity
 function publishSigs() public returns(bool){
 
 require(block >= electionBlockEnd);
@@ -84,11 +84,11 @@ The bridge contract allows assets on Ethereum to be moved over to the liquidity 
 
 When the PoS network begins, a minority block reward (such as 33%), is emitted into the liquidity pool on the PoS network. A liquidity pool is a smart contract with internal logic and the ability to handle PoS assets. 
 
-The function in the bridge contract is the purchase method. Any ether placed in the bridge contract is observed by the watching validators on the host chain. The next validator who wishes to collect the fee from the purchase transaction process the smart contract on the PoS network and emits tokens to the user’s PoS address (nominated in the bridge transaction).
+The function in the bridge contract is the purchase method. Any ether placed in the bridge contract is observed by the watching validators on the host chain. The next validator who wishes to collect the fee from the purchase transaction processes the smart contract on the PoS network and emits tokens to the user’s PoS address (nominated in the bridge transaction).
 
 The purchase method in the bridge contract:
 
-``` 
+```solidity
 function purchaseTokens(address _destAddr) public payable {
 
   uint256 depthEther = address(this).balance;
@@ -99,7 +99,7 @@ function purchaseTokens(address _destAddr) public payable {
 
 The validator on the PoS network then processes the purchase (assuming EVM-like smart contracts and solidity-like code) by reading the bridge contract events and making an appropriate call on the smart contract:
 
-``` 
+```solidity
 function emitTokens(uint256 _amount, address _destAddr) onlyValidator {
 
   uint256 depthToken = address(this).balance;
@@ -162,5 +162,3 @@ The Bridge Contract can continue to be used indefinitely as long as the network 
 
 # Conclusion
 We have discussed a novel distribution method that allows a PoS network to be launched in a matter that does not cause cartels, coordination or plutocracies. The network is first seeded from a host chain that provides a permissionless election forum, as well as liquidity. One the minimum number of validators have been elected, they begin the network. New validators are also added in a permissionless way, until the maximum is achieved. PoS tokens are also distributed into a liquidity pool that allows anyone to acquire them. Once the network has been bootstrapped, the election and bridge contracts can be decomissioned safely. 
-
-
