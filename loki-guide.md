@@ -1,5 +1,6 @@
 ## Loki Dev Notes
 
+This is my
 
 ### MAC Guide
 
@@ -20,6 +21,7 @@ chown -R snode:snode /home/snode/.ssh
 
 —
 1. **Start**
+
 Ssh in to your service node
 
 ```
@@ -44,6 +46,7 @@ rm -f loki-linux-x64-v2.0.2.zip
 ```
 
 3. **Start screen**
+
 This runs parallel processes on the same machine:
 
 ```
@@ -53,6 +56,7 @@ screen -x <lokidprocess>
 
 
 4. **Start Daemon**
+
 ```
 cd loki-linux-x64-v2.0.2
 ./lokid --service-node
@@ -114,6 +118,12 @@ Log out (Step 6)
 ### Other
 
 Other code snippets for ease of use:
+
+Create an alias to make life easier:
+```
+ln -snf loki-linux-x64-v2.0.2 loki
+```
+
 
 ```
 sudo systemctl stop lokid.service
