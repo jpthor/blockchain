@@ -1,10 +1,18 @@
 ## Loki Dev Notes
 
-This is my
+This is my easy guide to setting up on a Linux server.
 
-### MAC Guide
+Loki: https://loki.network/
+Loki Docs: https://lokidocs.com/
+Loki Service Node Guide: https://lokidocs.com/ServiceNodes/SNFullGuide/
+Loki Service Node Update Guide: https://lokidocs.com/ServiceNodes/UpdateGuide/
 
-Digital Ocean, 25gb drive, 1gb RAM.
+
+
+
+### Linux Guide
+
+Digital Ocean, Ubuntu, 25gb drive, 1gb RAM.
 
 When creating your node, add your SSH PUB KEY so that you can ssh in without a password.
 
