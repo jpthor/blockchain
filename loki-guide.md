@@ -2,10 +2,10 @@
 
 This is my easy guide to setting up on a Linux server.
 
-Loki: https://loki.network/
-Loki Docs: https://lokidocs.com/
-Loki Service Node Guide: https://lokidocs.com/ServiceNodes/SNFullGuide/
-Loki Service Node Update Guide: https://lokidocs.com/ServiceNodes/UpdateGuide/
+* Loki: https://loki.network/
+* Loki Docs: https://lokidocs.com/
+* Loki Service Node Guide: https://lokidocs.com/ServiceNodes/SNFullGuide/
+* Loki Service Node Update Guide: https://lokidocs.com/ServiceNodes/UpdateGuide/
 
 
 
