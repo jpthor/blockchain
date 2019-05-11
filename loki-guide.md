@@ -14,6 +14,8 @@ This is my easy guide to setting up on a Linux server.
 
 Digital Ocean, Ubuntu, 25gb drive, 1gb RAM.
 
+https://www.digitalocean.com/products/linux-distribution/ubuntu/
+
 When creating your node, add your SSH PUB KEY so that you can ssh in without a password.
 
 [See my SSH Guide](https://github.com/jpthor/devnotes/blob/master/terminal.md)
