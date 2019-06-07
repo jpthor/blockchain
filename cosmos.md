@@ -73,3 +73,22 @@ curl -s http://localhost:1317/auth/accounts/$(nscli keys show jack -a)
 ## Deploying to a VPS:
 
 #TODO
+
+## Understanding Cosmos
+
+Cosmos separates out the interface nicely from the backend. The CLI or Rest server essentially makes calls to a module called the "querier" which triages the requests at end points and then queries the keeper module. 
+
+The Keeper module maintains the getters and setters for chain state and other core Cosmos Modules. 
+
+A Types module maintains the format of the data that should be expected to retrieve from the state. 
+
+
+![Cosmos Query Pathway](https://github.com/jpthor/blockchain/blob/master/images/cosmos-query-pathway.png)
+
+
+To send a transaction, the same interface composes messages and these are wrapped in transactions that are then fired off to the Keeper. 
+
+This then updates state which must conform to some checks and balances in the application logic. 
+
+
+![Cosmos Tx Pathway](https://github.com/jpthor/blockchain/blob/master/images/cosmos-tx-pathway.png)
