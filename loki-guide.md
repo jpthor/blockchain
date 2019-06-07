@@ -18,7 +18,7 @@ https://www.digitalocean.com/products/linux-distribution/ubuntu/
 
 When creating your node, add your SSH PUB KEY so that you can ssh in without a password.
 
-[See my SSH Guide](https://github.com/jpthor/devnotes/blob/master/terminal.md)
+[See my SSH Guide](https://github.com/skyy/devnotes/blob/master/terminal.md)
 
 Make sure you create a non-root user "snode":
 ```
