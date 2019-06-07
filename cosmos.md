@@ -86,9 +86,17 @@ A Types module maintains the format of the data that should be expected to retri
 ![Cosmos Query Pathway](https://github.com/jpthor/blockchain/blob/master/images/cosmos-query-pathway.png)
 
 
-To send a transaction, the same interface composes messages and these are wrapped in transactions that are then fired off to the Keeper. 
+To send a transaction, the same interface composes messages and these are wrapped in transactions that are then fired off to a handler which triages the calls for the Keeper. 
 
-This then updates state which must conform to some checks and balances in the application logic. 
+The Keeper then can update state and application logic can be written to perform checks and balances. 
 
 
 ![Cosmos Tx Pathway](https://github.com/jpthor/blockchain/blob/master/images/cosmos-tx-pathway.png)
+
+## Genesis Files
+
+Sets the genesis chain state. 
+
+## App File
+
+Initialises everything. 
