@@ -79,6 +79,7 @@ curl -s http://localhost:1317/auth/accounts/$(nscli keys show jack -a)
 
 #TODO
 
+<<<<<<< HEAD
 
 # Rebuilding a Project
 
@@ -157,3 +158,31 @@ SetName -> SetSigner
 set_name -> set_signer
 
 Bid -> Fee
+=======
+## Understanding Cosmos
+
+Cosmos separates out the interface nicely from the backend. The CLI or Rest server essentially makes calls to a module called the "querier" which triages the requests at end points and then queries the keeper module. 
+
+The Keeper module maintains the getters and setters for chain state and other core Cosmos Modules. 
+
+A Types module maintains the format of the data that should be expected to retrieve from the state. 
+
+
+![Cosmos Query Pathway](https://github.com/jpthor/blockchain/blob/master/images/cosmos-query-pathway.png)
+
+
+To send a transaction, the same interface composes messages and these are wrapped in transactions that are then fired off to a handler which triages the calls for the Keeper. 
+
+The Keeper then can update state and application logic can be written to perform checks and balances. 
+
+
+![Cosmos Tx Pathway](https://github.com/jpthor/blockchain/blob/master/images/cosmos-tx-pathway.png)
+
+## Genesis Files
+
+Sets the genesis chain state. 
+
+## App File
+
+Initialises everything. 
+>>>>>>> 105852a2ad3ce8315baea9ecd77d6c66b85c6e1f
