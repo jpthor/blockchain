@@ -23,6 +23,16 @@ echo "export GO111MODULE=on" >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
+Fix for google-cloud-sdk bug:
+.zshrc
+```
+# The next line updates PATH for the Google Cloud SDK.
+source /Users/YOUR_USERNAME/google-cloud-sdk/path.zsh.inc
+
+# The next line enables zsh completion for gcloud.
+source /Users/YOUR_USERNAME/google-cloud-sdk/completion.zsh.inc
+```
+
 ## Build
 
 Go to `go/src/github.com/cosmos/sdk-application-tutorial`
