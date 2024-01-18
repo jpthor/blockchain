@@ -1,9 +1,9 @@
 # Overview
 
-The protocol has 4 user-types:
-- Vault Owners
-- Traders (L1 swaps, arbs, Perps)
-- Borrowers
+The protocol has 3 user-types:
+- Vault Owners (Nodes, Savers)
+- Traders (Swappers, Traders)
+- Derivative Asset Users
 
 # Pools
 Pools provide pricing function, as well as allowing TVL to accumulate.
@@ -12,15 +12,19 @@ Pools provide pricing function, as well as allowing TVL to accumulate.
 The network starts with a USDC, ETH and BTC pool. There are two derivative assets: USB and BASE. 
 BASE is the base asset (like RUNE). USB is the stablecoin. 
 
+```
 [USDC : BASE]
 [ETH : BASE]
 [BTC : BASE]
+```
 
 There is no need to hold the BASE asset. It cannot be directly swapped to. It simply is the pricing function between pools. 
 
 ## Add/Remove Liquidity
 All liquidity adds are into the Savers function, which mints synths. The protocol immediately mints the exact equivalent in BASE and deposits into the other side as PoL. 
-The reverse ocurrs on remove-liquidity. Since BASE cannot be bought directly, all Savers can add, PoL is matched, and then all Savers can leave again with PoL destroyed. 
+The reverse ocurrs on remove-liquidity. Since BASE cannot be bought directly, all Savers can add, PoL is matched, and then all Savers can leave again with PoL destroyed.
+
+IL can occur to PoL if intra-pool pricing changes (BTC pumps, USDC does not). 
 
 
 
