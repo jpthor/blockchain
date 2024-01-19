@@ -1,7 +1,8 @@
 # Overview
 
-The protocol has 3 user-types:
-- Vault Owners (Nodes, Savers)
+The protocol has 4 user-types:
+- Savers
+- Nodes 
 - Traders (Swappers, Traders)
 - Derivative Asset Users
 
@@ -9,8 +10,7 @@ The protocol has 3 user-types:
 Pools provide pricing function, as well as allowing TVL to accumulate.
 
 ## Assets
-The network starts with a USDC, ETH and BTC pool. There are two derivative assets: USB and BASE. 
-BASE is the base asset (like RUNE). USB is the stablecoin. 
+The network starts with a USDC, ETH and BTC pool. BASE is the base asset paired in each pool. 
 
 ```
 [USDC : BASE]
@@ -22,21 +22,31 @@ There is no need to hold the BASE asset. It cannot be directly swapped to. It si
 
 ## Add/Remove Liquidity
 All liquidity adds are into the Savers function, which mints synths. The protocol immediately mints the exact equivalent in BASE and deposits into the other side as PoL. 
-The reverse ocurrs on remove-liquidity. Since BASE cannot be bought directly, all Savers can add, PoL is matched, and then all Savers can leave again with PoL destroyed.
+The reverse ocurrs on remove-liquidity. The PoL is the dual-LP, underwriting the Savers.
 
-IL can occur to PoL if intra-pool pricing changes (BTC pumps, USDC does not). 
-
-
-
-# Vaults
-Anyone who deposits L1 assets into vaults are given Vault Units which is equal to their share of the network TVL at the time. 
+# Savers & Nodes
+Savers & Nodes earn the income of the pools, and they contribute the TVL. Nodes are a special kind of Saver. An Incentive Pendulum exists to keep Savers:Nodes 33:67. 
+This should scale TVL without becoming too insecure. Nodes secure their capital, and Saver capital.
 
 ## Nodes
-Nodes compete on bonded Vault Units to enter the validator set. Node competition drives up TVL. 
+A Saver who has been in the network for 30 days, can apply to be a Node. 
+At this point, they forgo their "fixed principle" rights (ie, deposit 1 BTC, withdraw 1 BTC). 
+> To do this, swap their synths to L1, then mint PoL to match, then add back to all pools as liquidity.
+> They have their synths converted to PoL (dual-LP).
 
-## Savers
-Savers do not compete to enter the validator set. They simply earn a small % of network fees than nodes (some discount, like -33%). Saver adoption drives up TVL.
+The amount of BASE tokens minted in PoL to match their liquidity is their "Bond Units". 
+This is the ratio of their capital (at that time) to the total capital in the network. 
+Now they own a fixed percent of TVL, and no longer a fixed principle. 
+```
+TVL: $1.5m
+Nodes: 10, own $1m (67%)
+Saver has $150k in deposits, becomes a Node: $150k/$/1.5m = 10% = 10 Bond Units (100 outstanding). 
+New Node: 10% of TVL if they redeem
+```
 
+Now, the node is underwriting the Savers, and are cognitively immune to IL because their ownership is TVL%, not fixed. In return they get
+- higher income share
+- TVL claim rights
 
 
 # Swaps
@@ -61,7 +71,7 @@ Supported
 ## Economics
 Nodes should own most of the TVL themselves, so if they steal, they just steal their own money. 
 Savers rely on nodes not stealing. Large Savers should just become Nodes to ensure no collusion. 
-Vault Units cannot be used for bond until after 30 days. This ensures that all Nodes put up large amounts of capital at risk in the network first. 
+Savers cannot be used for bond until after 30 days. This ensures that all Nodes put up large amounts of capital at risk in the network first. 
 
 ###############
 
