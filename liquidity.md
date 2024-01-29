@@ -1,30 +1,39 @@
 # Overview
 
 ## Names
-Alpine
-Abex Protocol
-Actex Protocol
-Adex Protocol
-Aflex Protocol
-Agorix Protocol
-Ajarix Protocol
-Akarix Protocol
-Alarix Protocol
-Altonix Protocol
-Alpex Protocol  <<<<<<<<<< Alp(ha), pe(rps), ex(change)
-AlpineX Protocol
-Amortix Protocol
-Anchorix Protocol
-Apex Protocol
-Aquatix Protocol
-Ardex Protocol
-Asdex Protocol
-Asterix Protocol
-Atonix Protocol
-Avarix Protocol
-Awarix Protocol
-Axona Protocol
-Azadix Protocol
+- Alpine
+- Abex Protocol
+- Actex Protocol
+- Adex Protocol
+- Aflex Protocol
+- Agorix Protocol
+- Ajarix Protocol
+- Akarix Protocol
+- Alarix Protocol
+- Altonix Protocol
+- Alpex Protocol  <<<<<<<<<< Alp(ha), pe(rps), ex(change)
+- AlpineX Protocol
+- Amortix Protocol
+- Anchorix Protocol
+- Apex Protocol
+- Aquatix Protocol
+- Ardex Protocol
+- Asdex Protocol
+- Asterix Protocol
+- Atonix Protocol
+- Avarix Protocol
+- Awarix Protocol
+- Axona Protocol
+- Azadix Protocol
+
+
+| Asset	| L1	| Trade	| Derived | 	Perp	| Exported |
+|---|---|---|---|---|---|
+| BASE	| X	| X	| -| 	p.X	| X |
+| BTC	| BTC.BTC	| BTC~BTC	| d.BTC	| p.BTC	| x.BTC | 
+| ETH	| ETH.ETH	| ETH~ETH	| d.ETH	| p.ETH	| x.ETH |
+| USDC	| ETH.USDC	| ETH~USDC	| USX	| p.USX	| USX |
+| USDT	| ETH.USDC	| ETH~USDT	| USX	| p.USX	| USX |
 
 ## Genesis
 The network starts with 4 nodes with ETH and BTC synced. $100k of BTC, ETH, USDT, USDC is placed in the vaults, and 100k BASE is minted to match into each of the pools. There is no RESERVE. BASE value starts with a notional pool value of $1.00. 
