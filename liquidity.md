@@ -1,133 +1,128 @@
 # Overview
 
-The protocol has 4 user-types:
-- Savers
-- Nodes 
-- Traders (Swappers, Traders)
-- Derivative Asset Users
+## Names
+Alpine
+Abex Protocol
+Actex Protocol
+Adex Protocol
+Aflex Protocol
+Agorix Protocol
+Ajarix Protocol
+Akarix Protocol
+Alarix Protocol
+Altonix Protocol
+Alpex Protocol  <<<<<<<<<< Alp(ha), pe(rps), ex(change)
+AlpineX Protocol
+Amortix Protocol
+Anchorix Protocol
+Apex Protocol
+Aquatix Protocol
+Ardex Protocol
+Asdex Protocol
+Asterix Protocol
+Atonix Protocol
+Avarix Protocol
+Awarix Protocol
+Axona Protocol
+Azadix Protocol
 
-# Pools
-Pools provide pricing function, as well as allowing TVL to accumulate.
+## Genesis
+The network starts with 4 nodes with ETH and BTC synced. $100k of BTC, ETH, USDT, USDC is placed in the vaults, and 100k BASE is minted to match into each of the pools. There is no RESERVE. BASE value starts with a notional pool value of $1.00. 
+Other nodes can then LP into the vaults to join and churn into the network. 
 
-## Assets
-The network starts with a USDC, ETH and BTC pool. BASE is the base asset paired in each pool. 
+# Nodes
+Node operators provide LP capital (single-sided). BASE tokens are minted to match their LP capital based on current pool price. The number of BASE minted is their LP units, which becomes their Bond Units. Thus Node Bond Value is measured in units of BASE, and can be priced in $USD at all times. There is an finite number of slots for nodes. Nodes do not need to split up their capital across multiple nodes, because they are protecting their own capital. System Income is split based on Bond Units, so large nodes earn more. 
 
-```
-[USDC : BASE]
-[ETH : BASE]
-[BTC : BASE]
-```
+Large nodes only get 1 signing power for block validation and TSS signing. This means all nodes have equal voting power, regardless of their Bond Value. Competition into bonding should ensure Bond Value always goes up. 
+Anyone can LP and delegate their LP tokens to any node. LPs can delegate across pools, since LP tokens are universally priced no matter the pool. 
 
-There is no need to hold the BASE asset. It cannot be directly swapped to. It simply is the pricing function between pools. 
+## Economic Security 
+Nodes own all the TVL all the time. 2/3rds can only steal their money, plus 50% more. The best defence against a rug is just running your own node. 
 
-## Add/Remove Liquidity
-All liquidity adds are into the Savers function, which mints synths. The protocol immediately mints the exact equivalent in BASE and deposits into the other side as PoL. 
-The reverse ocurrs on remove-liquidity. The PoL is the dual-LP, underwriting the Savers.
+## Churning
+Churning should be slow, once every 30 days. Nodes can only BOND/UNBOND and redeem their LP when churning. This should give time for Stables/Savers/Borrowers/Perps/Traders to see a slow-rug and redeem their IOUs before nodes take their L1 capital. 
 
-# Savers & Nodes
-Savers & Nodes earn the income of the pools, and they contribute the TVL. Nodes are a special kind of Saver. An Incentive Pendulum exists to keep Savers:Nodes 33:67. 
-This should scale TVL without becoming too insecure. Nodes secure their capital, and Saver capital.
+Nodes should be attracted to the network based on:
+- Yield
+- Speculation on BASE asset brings L1 capital
+- Adoption of Derived Assets brings L1 capital
 
-## Nodes
-A Saver who has been in the network for 30 days, can apply to be a Node. 
-At this point, they forgo their "fixed principle" rights (ie, deposit 1 BTC, withdraw 1 BTC). 
-> To do this, swap their synths to L1, then mint PoL to match, then add back to all pools as liquidity.
-> They have their synths converted to PoL (dual-LP).
+The nodes that stay in for the longest should make the most money.
 
-The amount of BASE tokens minted in PoL to match their liquidity is their "Bond Units". 
-This is the ratio of their capital (at that time) to the total capital in the network. 
-Now they own a fixed percent of TVL, and no longer a fixed principle. 
-```
-TVL: $1.5m
-Nodes: 10, own $1m (67%)
-Saver has $150k in deposits, becomes a Node: $150k/$/1.5m = 10% = 10 Bond Units (100 outstanding). 
-New Node: 10% of TVL if they redeem
-```
+## Swaps
+Pools are XYK for simplicity. Everything is default-auto-1block-streamed (Swaps, Savers, Loans). LP add-remove doesn’t need streaming because BASE is insta-minted/burnt at the correct price. 
+ 
+Affiliate Fees and Memoless are supported.
 
-Now, the node is underwriting the Savers, and are cognitively immune to IL because their ownership is TVL%, not fixed. In return they get
-- higher income share
-- TVL claim rights
-
-
-# Swaps
-Swaps (streaming by default) are between L1s. Swaps ensure revenue to the protocol. 
+## Liquidity Fees
+Liquidity Fees operate on a global minBP (5-10 BP), or the affiliate fee, whichever is higher. 70BP affiliate fee means more income for protocol. 
 
 ## Trade Assets
-Users can wrap representative assets to trade quickly between pools. Instead of settling to L1, the asset is settled to the native chain. 
-Trade assets incur a small -ve interest fee to encourage quick useage and to pay for their security (and prevent accumulation). 
-The -ve interest rate is coupled to the amount of trade assets to vault assets. 
+Trade Assets are used for limit orders and arb. Trade assets are kept outside the pools and attract small -ve interest depending on how much is outstanding relative the depths of the pools. 
 
-## Order Books
-Trade assets can be used for buy-sell limit orders to improve the arb function. 
+# Derived Assets
+Derived Assets allow mint/burn of BASE into the secondary asset based on the price of an underlying L1 pool. Derived Assets are IOUs.
 
-## Dex Agg
-Supported
+## Savers
+Savers use derived assets and earn 1/3rd the fees for each pool. Savers deposit L1 capital, which buys and burns BASE.
 
-## Memoless
-Supported
-
-# Security
-
-## Economics
-Nodes should own most of the TVL themselves, so if they steal, they just steal their own money. 
-Savers rely on nodes not stealing. Large Savers should just become Nodes to ensure no collusion. 
-Savers cannot be used for bond until after 30 days. This ensures that all Nodes put up large amounts of capital at risk in the network first. 
-
-###############
-
-All the above features are essentially risk-free. There's no speculative asset. Participants compete for revenue-share. 
-Every participant can come and go with exactly their contributed capital (minus fees plus revenue)
-
-The below features introduce speculation and risk, but if handled correctly, can supercharge TVL growth and adoption. 
-
-##############
-
-# Derivatives
-Derivative assets amplify the protocol and provide speculation. 
-It provides price action on BASE, which causes more TVL to be accumulated, which makes Node TVL share rapidly increase. 
-As lending is adopted (people take out loans, mint stablecoins, or trade on the perps), TVL should increase. 
-
-## Stablecoin
-A mint-burn stablecoin function is provided, same as TOR. It is transferable. It buys and burns BASE. 
+## Stable
+The STABLE is a derived asset which uses one or more stablecoin pool prices. Stables can be exported to external EVMs by using the Router which also contains ERC-20 mint/burn. 
 
 ## Borrowing
-Users can deposit L1, which buys and burns BASE. The can borrow against their L1 at 200% CR. Their debt is denominated in USB and streamed to USDC. 
-They pay a small interest rate to ensure revenue to the protocol. 
-They do not need to be liquidated or have an expiry. 
+Borrowers use derived assets. Borrowers deposit L1 capital, which buys and burns BASE into STABLE. At 200% CR, half of it is minted back and swapped back out. Borrowers should pay an interest rate to provide income to network while the loan is open. 
 
-## Perpetuals
-A classic Bitmex style Perps exchange is provided. The PnL asset is USB.
-It has liquidations and daily funding rate.  
+## Perps
+Perps use derived assets. A funding rate and liquidation mechanism is required. Up to 100x leverage possible. The PERP module keeps track of the BASE value of all tokens inside PERP positions. When a trader opens a position the PERP pool increases and it decreases when they exit. Traders compete amongst themselves. The maximum the winning side can win is the value of the PERP pool (in BASE). This keeps the risk isolated to just the PERP pool and stops the protocol taking the other side of trades. A trader is liquidated when their position is evaluated to 0 by the protocol, which just deletes them. This effectively moves their capital to the winners, who can claim it. Unclaimed capital (happens when one side is liquidated, but the other side doesn’t close to claim and the price moves back) just bolsters the PERP pool, and keeps it there the next time a winner is in a winning trade. This is effectively the Insurance Fund.
 
-# Risk
-All derivative mint-burn and Perp trading accumulates fees (as well as liquidations). 
-In theory this should double the capital efficiency of the network because much more "swaps" across pools will happen, and increase revenue. 
-As long as no nodes leave with the TVL, the entire thing can unwind safely back to 0 again. This is because there is no way to directly buy and sell BASE (and profit on the speculation outside of the network).
+# Airdrop 
+To incentivise early adoption, all participants in the network earn rights to a future airdrop which will mint 10% extra the outstanding BASE supply and can be claimed. Addresses earn airdrop points which accumulate until the day the airdrop is activated. 
 
-The only issue is that the speculation on BASE Asset will bring in more TVL and nodes can unbond and leave. This is where the value leakage comes from. 
-If they do, the system will in theory be insolvent, as although the derivative asset holders will be able to mint back to BASE and leave, some Savers (or Nodes) will be left holding the bag. 
+If the network has $1bn L1 in the pools, then BASE is worth $1bn so the airdrop is worth $100m. 
 
-## Solution
-To counteract this problem, two things can be done:
-1) Nodes are paid their fee-revenue as USB, which accumulates and is auto-swapped to their L1 address (like affiliate-collector module).
-This means their revenue is realised always, and is tracked separately to their principle.
+**LPs/Nodes:** LP Units * Age
+`BOND:nodeAddress:airdropAddress`
 
-2) When Nodes leave, if their claim on the Vault Assets (by redeeming their Vault Units) is higher than their original deposit, they forego 50% of the gain in principle.
-This means they leave behind 50% of the gain in principle (due to BASE speculation) to staying nodes. 
+**Savers:** Deposit in Base value * Age
+`+:asset:airdropAddress`
 
-3) All Derivative Asset swap fees (and liquidations) should burn BASE forever. This means those staying in have some mechanism to speculate on future adoption.
+**Borrowers:** Deposit in Base value * Age
+`$+:collateralAsset:debtAsset:airdropAddress`
 
-## End Result
-There is no external speculation on BASE, so protocol risk is entirely contained to the network. Nodes secure their own TVL (plus some extra from Savers and Traders). 
-Nodes compete for revenue share of the network. 
-Derivative assets provide features and speculation, which should increase adoption. 
+**StableMinters:** Deposit in Base value * Age
+`=:X.USD:baseAddress`
 
-To prevent system insolvency (the last nodes holding the bag), staying nodes are granted mechnisms to invest in the future of the protocol. 
-This should work as long as the network can process swaps and charge fees. 
+**Traders:** Fees paid in Base value * Age
+Their trading address
+
+**Affiliates:** Fees collected in Base value * Age
+Their affiliate address
 
 
+## BASE Launch
+Airdrop height is set to 0, but nodes can vote a future blockheight to enable it. Once consensus on a height is reached, the airdrop and launch goes ahead. Nodes will want to delay the airdrop long enough to maximise adoption metrics. The longer they wait the more valuable the network. 
 
+- 10% is minted into a module
+- All participants claim their share based on airdrop points
+- BASE can be bought/sold in the pools
 
+For every $1 that BASE is bought by speculators, $1 of TVL is deposited into the network. Since only 10% is circulating from the airdrop at the start, the risk of volatility is low. Nodes profit the most from speculation since they own the TVL. 
+
+## Router
+The router deposits and churns assets into vaults. The router owns ERC-20 (777) contracts that can mint new tokens which are wrapped derived assets or bond units. Thus the network can export tokens:
+- Export $USX stablecoin
+- Export derived BTC/ETH
+- Export bond units for yield-farming
+
+Dev deploys the ERC-20 (777) and sets the owner to the router. Only the protocol can then mint. If new router, the old router must migrate owner. To track vault privileges:
+
+- Once `router.transferAllowance(newVault)`is called, 
+- `mapping isVault(address,bool)` turns off `oldVault` and turns on `newVault`.
+- Thus vaults can expand and contract, but only the latest vaults have the privileges to be owner
+- Function `isOwner(isVault(msg.sender))`
+- Any vault can then mint on the wrapped asset contracts
+
+Anyone depositing wrapped assets into the router will cause them to be burnt, and minted back into the protocol. 
 
 
 
