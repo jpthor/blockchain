@@ -5,13 +5,14 @@
 - Abex Protocol
 - Actex Protocol
 - Adex Protocol
+- Aldex Protocol
 - Aflex Protocol
 - Agorix Protocol
 - Ajarix Protocol
 - Akarix Protocol
 - Alarix Protocol
 - Altonix Protocol
-- Alpex Protocol  <<<<<<<<<< Alp(ha), pe(rps), ex(change)
+- Alpex Protocol 
 - AlpineX Protocol
 - Amortix Protocol
 - Anchorix Protocol
@@ -25,6 +26,8 @@
 - Awarix Protocol
 - Axona Protocol
 - Azadix Protocol
+
+- Dexalta Protocol
 
 
 | Asset	| L1	| Trade	| Derived | 	Perp	| Exported |
